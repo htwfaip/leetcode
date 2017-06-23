@@ -25,21 +25,25 @@ namespace LeetCodeSolution.HardProblems
              *      M[i,j] = M[i,j-2]
              */
 
-                         
-            bool[,] match = new bool[p.Length+1, s.Length+1];
+            int pLength = p.Length;
+            int sLength = s.Length;
+
+            // By default bool array is false             
+            bool[,] match = new bool[pLength+1, sLength+1];
 
             match[0, 0] = true;
-            for (int i = 1; i <= s.Length; i++)
-                match[0, i] = false;
-            for (int i = 1; i <= p.Length; i++)
+            
+            //for (int i = 1; i <= s.Length; i++)
+                //match[0, i] = false;
+            
+            for (int i = 2; i <= pLength; i = i +2)
             {
-                if (i % 2 == 1) match[i, 0] = false;
-                else match[i, 0] = match[i - 2, 0] && p[i-1] == '*';
+                match[i, 0] = match[i - 2, 0] && p[i-1] == '*';
             }
 
-            for (int j = 1; j <= s.Length; j++)
+            for (int j = 1; j <= sLength; j++)
             {
-                for (int i = 1; i <= p.Length; i++)
+                for (int i = 1; i <= pLength; i++)
                 {
                     if (p[i-1] != '*')
                     {
@@ -52,7 +56,7 @@ namespace LeetCodeSolution.HardProblems
                 }
             }
 
-            return match[p.Length, s.Length];
+            return match[pLength, sLength];
         }
 
         public static void Test()
